@@ -27,7 +27,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="PanelBackground" max="32767" attributes="0"/>
+              <Component id="PanelBackground" pref="685" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -48,10 +48,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="textTitleCajero" min="-2" pref="894" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="894" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
-              <Component id="txtDescCajeros" alignment="0" max="32767" attributes="0"/>
+              <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
               <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
                   <Component id="PanelBgProductos" min="-2" max="-2" attributes="0"/>
@@ -76,9 +76,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="textTitleCajero" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="txtDescCajeros" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="20" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -101,20 +101,20 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="textTitleCajero">
+        <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="22" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Personal - Cajeros"/>
+            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Productos"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="txtDescCajeros">
+        <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Registra, actualiza o elimina el personal asignado a los locales comerciales."/>
+            <Property name="text" type="java.lang.String" value="Registra, actualiza o elimina el producto asignado a las categorias del mismo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -126,7 +126,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblCajeros">
+            <Component class="javax.swing.JTable" name="tblProductos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
@@ -160,28 +160,28 @@
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                               <Component id="btnEliminar" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtIdCajero" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtIdProducto" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="txtFieldBuscar" min="-2" pref="320" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBuscar" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtFieldIdCajero" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFieldNombre" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFieldApPaterno" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFieldApMaterno" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFieldUsuario" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFieldClave" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtApPaterno" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtApMaterno" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtUsuario" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtClave" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtLocal" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldIdProducto" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldDescProd" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldUnidad" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldPrecVenta" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldStock" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFieldMinStock" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtDescProd" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtUnidad" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtPrecVenta" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtStock" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMinStock" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtCategoria" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="txtFieldIdLocal" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFieldCategoria" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="comboLocal" max="32767" attributes="0"/>
+                              <Component id="comboCategoria" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -197,35 +197,35 @@
                           <Component id="btnBuscar" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtIdCajero" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIdProducto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldIdCajero" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="txtFieldIdProducto" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtDescProd" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldNombre" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="txtFieldDescProd" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtApPaterno" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtUnidad" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldApPaterno" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="txtFieldUnidad" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtApMaterno" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPrecVenta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldApMaterno" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="txtFieldPrecVenta" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtUsuario" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtStock" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldUsuario" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="txtFieldStock" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtClave" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMinStock" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="txtFieldClave" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="txtFieldMinStock" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="txtLocal" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCategoria" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="comboLocal" max="32767" attributes="0"/>
-                          <Component id="txtFieldIdLocal" max="32767" attributes="0"/>
+                          <Component id="comboCategoria" max="32767" attributes="0"/>
+                          <Component id="txtFieldCategoria" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -252,75 +252,75 @@
                 <Property name="text" type="java.lang.String" value="Buscar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="txtIdCajero">
+            <Component class="javax.swing.JLabel" name="txtIdProducto">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="ID Cajero"/>
+                <Property name="text" type="java.lang.String" value="ID Producto"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldIdCajero">
+            <Component class="javax.swing.JTextField" name="txtFieldIdProducto">
             </Component>
-            <Component class="javax.swing.JLabel" name="txtNombre">
+            <Component class="javax.swing.JLabel" name="txtDescProd">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nombre"/>
+                <Property name="text" type="java.lang.String" value="Descripci&#xf3;n de Producto"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldNombre">
+            <Component class="javax.swing.JTextField" name="txtFieldDescProd">
             </Component>
-            <Component class="javax.swing.JLabel" name="txtApPaterno">
+            <Component class="javax.swing.JLabel" name="txtUnidad">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Apellido Paterno"/>
+                <Property name="text" type="java.lang.String" value="Unidad"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldApPaterno">
+            <Component class="javax.swing.JTextField" name="txtFieldUnidad">
             </Component>
-            <Component class="javax.swing.JLabel" name="txtApMaterno">
+            <Component class="javax.swing.JLabel" name="txtPrecVenta">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Apellido Materno"/>
+                <Property name="text" type="java.lang.String" value="Precio de Venta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldApMaterno">
+            <Component class="javax.swing.JTextField" name="txtFieldPrecVenta">
             </Component>
-            <Component class="javax.swing.JLabel" name="txtUsuario">
+            <Component class="javax.swing.JLabel" name="txtStock">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Usuario"/>
+                <Property name="text" type="java.lang.String" value="Stock"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldUsuario">
+            <Component class="javax.swing.JTextField" name="txtFieldStock">
             </Component>
-            <Component class="javax.swing.JLabel" name="txtClave">
+            <Component class="javax.swing.JLabel" name="txtMinStock">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Clave de Seguridad"/>
+                <Property name="text" type="java.lang.String" value="Stock Minimo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldClave">
+            <Component class="javax.swing.JTextField" name="txtFieldMinStock">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldClaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldMinStockActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="txtLocal">
+            <Component class="javax.swing.JLabel" name="txtCategoria">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Local Comercial"/>
+                <Property name="text" type="java.lang.String" value="Categoria"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JToggleButton" name="btnAgregar">
@@ -365,7 +365,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="comboLocal">
+            <Component class="javax.swing.JComboBox" name="comboCategoria">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -386,7 +386,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFieldIdLocal">
+            <Component class="javax.swing.JTextField" name="txtFieldCategoria">
             </Component>
           </SubComponents>
         </Container>

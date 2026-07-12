@@ -4,6 +4,7 @@ package com.SaleProject.view;
 //FlatLaF Themes
 import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
 import java.awt.Color;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 public class Dashboard extends javax.swing.JFrame {
@@ -14,23 +15,26 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         initStyles();
         initContent();
+   }
+    
+    private void initContent(){
+        showPanel(new PanelDashBoard());
     }
     
-    public void initContent(){
-        PanelCajeros pp = new PanelCajeros();
+    private void showPanel(JPanel p){
         PanelContent.removeAll();
-        PanelContent.add(pp, java.awt.BorderLayout.CENTER);
+        PanelContent.add(p, java.awt.BorderLayout.CENTER);
         PanelContent.revalidate();
         PanelContent.repaint();
     }
     
-    public void initStyles(){
+    private void initStyles(){
         // Borde redondeado para el Jpanel con un borde gris claro
         //PanelContent.putClientProperty("FlatLaf.style", "arc: 100; border: 1,1,1,1,#E5E7EB,1,20");
         PanelContent.setBackground(new java.awt.Color(245, 247, 250)); // gris suave 
 
         // Edicion de tamaño y color
-        text_logo.putClientProperty("flatLaf.style", "font: $h2.font");
+        text_logo.putClientProperty("FlatLaf.style", "font: $h2.font");
         text_logo.setForeground(Color.black);
         
         //Estilos para los botones el Menu
@@ -76,6 +80,8 @@ public class Dashboard extends javax.swing.JFrame {
         PanelContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1200, 720));
+        setPreferredSize(new java.awt.Dimension(1360, 800));
 
         background.setBackground(new java.awt.Color(248, 250, 252));
         background.setMinimumSize(new java.awt.Dimension(1200, 720));
@@ -164,17 +170,16 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(menuLayout.createSequentialGroup()
-                            .addComponent(logo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(text_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(btnCajeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addComponent(logo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(text_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCajeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         menuLayout.setVerticalGroup(
@@ -246,6 +251,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         // TODO add your handling code here:
+        showPanel(new PanelProductos());
     }//GEN-LAST:event_btnProductoActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
@@ -258,10 +264,12 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         // TODO add your handling code here:
+        showPanel(new PanelDashBoard());
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnCajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCajerosActionPerformed
         // TODO add your handling code here:
+        showPanel(new PanelCajeros());
     }//GEN-LAST:event_btnCajerosActionPerformed
 
     public static void main(String args[]) {

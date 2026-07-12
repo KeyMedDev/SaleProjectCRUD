@@ -1,9 +1,9 @@
 
 package com.SaleProject.view;
 
-public class PanelCajeros extends javax.swing.JPanel {
+public class PanelProductos extends javax.swing.JPanel {
 
-    public PanelCajeros() {
+    public PanelProductos() {
         initComponents();
         initStyle();
     }
@@ -16,8 +16,8 @@ public class PanelCajeros extends javax.swing.JPanel {
         jScrollPane1.putClientProperty("FlatLaf.style", "arc: 20; " + "border: 1,1,1,1,#E5E7EB,1,12;");
 
         // Aseguramos que la tabla no pinte bordes raros por dentro
-        tblCajeros.setShowHorizontalLines(true);
-        tblCajeros.setShowVerticalLines(false);
+        tblProductos.setShowHorizontalLines(true);
+        tblProductos.setShowVerticalLines(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -25,32 +25,32 @@ public class PanelCajeros extends javax.swing.JPanel {
     private void initComponents() {
 
         PanelBackground = new javax.swing.JPanel();
-        textTitleCajero = new javax.swing.JLabel();
-        txtDescCajeros = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCajeros = new javax.swing.JTable();
+        tblProductos = new javax.swing.JTable();
         PanelBgProductos = new javax.swing.JPanel();
         txtFieldBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JToggleButton();
-        txtIdCajero = new javax.swing.JLabel();
-        txtFieldIdCajero = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JLabel();
-        txtFieldNombre = new javax.swing.JTextField();
-        txtApPaterno = new javax.swing.JLabel();
-        txtFieldApPaterno = new javax.swing.JTextField();
-        txtApMaterno = new javax.swing.JLabel();
-        txtFieldApMaterno = new javax.swing.JTextField();
-        txtUsuario = new javax.swing.JLabel();
-        txtFieldUsuario = new javax.swing.JTextField();
-        txtClave = new javax.swing.JLabel();
-        txtFieldClave = new javax.swing.JTextField();
-        txtLocal = new javax.swing.JLabel();
+        txtIdProducto = new javax.swing.JLabel();
+        txtFieldIdProducto = new javax.swing.JTextField();
+        txtDescProd = new javax.swing.JLabel();
+        txtFieldDescProd = new javax.swing.JTextField();
+        txtUnidad = new javax.swing.JLabel();
+        txtFieldUnidad = new javax.swing.JTextField();
+        txtPrecVenta = new javax.swing.JLabel();
+        txtFieldPrecVenta = new javax.swing.JTextField();
+        txtStock = new javax.swing.JLabel();
+        txtFieldStock = new javax.swing.JTextField();
+        txtMinStock = new javax.swing.JLabel();
+        txtFieldMinStock = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JToggleButton();
         btnEliminar = new javax.swing.JToggleButton();
         btnModificar = new javax.swing.JToggleButton();
-        comboLocal = new javax.swing.JComboBox<>();
-        txtFieldIdLocal = new javax.swing.JTextField();
+        comboCategoria = new javax.swing.JComboBox<>();
+        txtFieldCategoria = new javax.swing.JTextField();
         btnPrimero = new javax.swing.JToggleButton();
         btnAnterior = new javax.swing.JToggleButton();
         btnSiguiente = new javax.swing.JToggleButton();
@@ -61,13 +61,13 @@ public class PanelCajeros extends javax.swing.JPanel {
         PanelBackground.setBackground(new java.awt.Color(248, 250, 252));
         PanelBackground.setPreferredSize(new java.awt.Dimension(890, 680));
 
-        textTitleCajero.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        textTitleCajero.setText("Gestión de Personal - Cajeros");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel1.setText("Gestión de Productos");
 
-        txtDescCajeros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtDescCajeros.setText("Registra, actualiza o elimina el personal asignado a los locales comerciales.");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Registra, actualiza o elimina el producto asignado a las categorias del mismo.");
 
-        tblCajeros.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,7 +78,7 @@ public class PanelCajeros extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblCajeros);
+        jScrollPane1.setViewportView(tblProductos);
 
         PanelBgProductos.setBackground(new java.awt.Color(248, 250, 252));
 
@@ -87,28 +87,28 @@ public class PanelCajeros extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
 
-        txtIdCajero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtIdCajero.setText("ID Cajero");
+        txtIdProducto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtIdProducto.setText("ID Producto");
 
-        txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtNombre.setText("Nombre");
+        txtDescProd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtDescProd.setText("Descripción de Producto");
 
-        txtApPaterno.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtApPaterno.setText("Apellido Paterno");
+        txtUnidad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtUnidad.setText("Unidad");
 
-        txtApMaterno.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtApMaterno.setText("Apellido Materno");
+        txtPrecVenta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtPrecVenta.setText("Precio de Venta");
 
-        txtUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtUsuario.setText("Usuario");
+        txtStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtStock.setText("Stock");
 
-        txtClave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtClave.setText("Clave de Seguridad");
+        txtMinStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtMinStock.setText("Stock Minimo");
 
-        txtFieldClave.addActionListener(this::txtFieldClaveActionPerformed);
+        txtFieldMinStock.addActionListener(this::txtFieldMinStockActionPerformed);
 
-        txtLocal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtLocal.setText("Local Comercial");
+        txtCategoria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtCategoria.setText("Categoria");
 
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnAgregar.setText("Agregar");
@@ -125,9 +125,9 @@ public class PanelCajeros extends javax.swing.JPanel {
         btnModificar.setPreferredSize(new java.awt.Dimension(112, 35));
         btnModificar.addActionListener(this::btnModificarActionPerformed);
 
-        comboLocal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboLocal.setMinimumSize(new java.awt.Dimension(72, 35));
-        comboLocal.setPreferredSize(new java.awt.Dimension(72, 35));
+        comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCategoria.setMinimumSize(new java.awt.Dimension(72, 35));
+        comboCategoria.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout PanelBgProductosLayout = new javax.swing.GroupLayout(PanelBgProductos);
         PanelBgProductos.setLayout(PanelBgProductosLayout);
@@ -142,27 +142,27 @@ public class PanelCajeros extends javax.swing.JPanel {
                         .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(44, 44, 44)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txtIdCajero, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIdProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelBgProductosLayout.createSequentialGroup()
                         .addComponent(txtFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txtFieldIdCajero, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFieldNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFieldApPaterno, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFieldApMaterno, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFieldUsuario, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFieldClave, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtApPaterno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtApMaterno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtClave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtLocal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtFieldIdProducto, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFieldDescProd, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFieldUnidad, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFieldPrecVenta, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFieldStock, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFieldMinStock, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDescProd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtUnidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtPrecVenta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtStock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtMinStock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanelBgProductosLayout.createSequentialGroup()
-                        .addComponent(txtFieldIdLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFieldCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(comboLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         PanelBgProductosLayout.setVerticalGroup(
@@ -173,35 +173,35 @@ public class PanelCajeros extends javax.swing.JPanel {
                     .addComponent(txtFieldBuscar)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
-                .addComponent(txtIdCajero)
+                .addComponent(txtIdProducto)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldIdCajero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtNombre)
+                .addComponent(txtDescProd)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldDescProd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtApPaterno)
+                .addComponent(txtUnidad)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtApMaterno)
+                .addComponent(txtPrecVenta)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldPrecVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtUsuario)
+                .addComponent(txtStock)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtClave)
+                .addComponent(txtMinStock)
                 .addGap(5, 5, 5)
-                .addComponent(txtFieldClave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFieldMinStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(txtLocal)
+                .addComponent(txtCategoria)
                 .addGap(5, 5, 5)
                 .addGroup(PanelBgProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboLocal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtFieldIdLocal))
+                    .addComponent(comboCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtFieldCategoria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(PanelBgProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -233,9 +233,9 @@ public class PanelCajeros extends javax.swing.JPanel {
         PanelBackgroundLayout.setHorizontalGroup(
             PanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBackgroundLayout.createSequentialGroup()
-                .addComponent(textTitleCajero, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtDescCajeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBackgroundLayout.createSequentialGroup()
                 .addComponent(PanelBgProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,9 +256,9 @@ public class PanelCajeros extends javax.swing.JPanel {
         PanelBackgroundLayout.setVerticalGroup(
             PanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBackgroundLayout.createSequentialGroup()
-                .addComponent(textTitleCajero)
+                .addComponent(jLabel1)
                 .addGap(5, 5, 5)
-                .addComponent(txtDescCajeros)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -284,7 +284,7 @@ public class PanelCajeros extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -301,9 +301,9 @@ public class PanelCajeros extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void txtFieldClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldClaveActionPerformed
+    private void txtFieldMinStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMinStockActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldClaveActionPerformed
+    }//GEN-LAST:event_txtFieldMinStockActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         // TODO add your handling code here:
@@ -325,27 +325,27 @@ public class PanelCajeros extends javax.swing.JPanel {
     private javax.swing.JToggleButton btnPrimero;
     private javax.swing.JToggleButton btnSiguiente;
     private javax.swing.JToggleButton btnUltimo;
-    private javax.swing.JComboBox<String> comboLocal;
+    private javax.swing.JComboBox<String> comboCategoria;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tblCajeros;
-    private javax.swing.JLabel textTitleCajero;
-    private javax.swing.JLabel txtApMaterno;
-    private javax.swing.JLabel txtApPaterno;
-    private javax.swing.JLabel txtClave;
-    private javax.swing.JLabel txtDescCajeros;
-    private javax.swing.JTextField txtFieldApMaterno;
-    private javax.swing.JTextField txtFieldApPaterno;
+    private javax.swing.JTable tblProductos;
+    private javax.swing.JLabel txtCategoria;
+    private javax.swing.JLabel txtDescProd;
     private javax.swing.JTextField txtFieldBuscar;
-    private javax.swing.JTextField txtFieldClave;
-    private javax.swing.JTextField txtFieldIdCajero;
-    private javax.swing.JTextField txtFieldIdLocal;
-    private javax.swing.JTextField txtFieldNombre;
-    private javax.swing.JTextField txtFieldUsuario;
-    private javax.swing.JLabel txtIdCajero;
-    private javax.swing.JLabel txtLocal;
-    private javax.swing.JLabel txtNombre;
-    private javax.swing.JLabel txtUsuario;
+    private javax.swing.JTextField txtFieldCategoria;
+    private javax.swing.JTextField txtFieldDescProd;
+    private javax.swing.JTextField txtFieldIdProducto;
+    private javax.swing.JTextField txtFieldMinStock;
+    private javax.swing.JTextField txtFieldPrecVenta;
+    private javax.swing.JTextField txtFieldStock;
+    private javax.swing.JTextField txtFieldUnidad;
+    private javax.swing.JLabel txtIdProducto;
+    private javax.swing.JLabel txtMinStock;
+    private javax.swing.JLabel txtPrecVenta;
+    private javax.swing.JLabel txtStock;
+    private javax.swing.JLabel txtUnidad;
     // End of variables declaration//GEN-END:variables
 
 }
