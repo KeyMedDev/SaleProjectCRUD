@@ -7,9 +7,11 @@ import java.sql.SQLException;
 public class connectiondb {
     // Parámetros para la conexion del servidor MySQL
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://40.114.38.182:3306/bdtiendapochita?useSSL=true&serverTimezone=UTC";
+    //private static final String URL = "jdbc:mysql://40.114.38.182:3306/bdtiendapochita?useSSL=true&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://127.0.0.1:8889/bdtiendapochita?useSSL=true&serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "enkoreactivate";
+    //    private static final String PASSWORD = "enkoreactivate";
+    private static final String PASSWORD = "root";
 
     public static Connection getConexion() {
         Connection cn = null;

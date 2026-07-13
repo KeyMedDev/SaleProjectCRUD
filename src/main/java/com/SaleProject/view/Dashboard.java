@@ -88,7 +88,10 @@ public class Dashboard extends javax.swing.JFrame {
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setPreferredSize(new java.awt.Dimension(270, 720));
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
+        // Direccion de iconos para windons
+        //logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
+        // Direion de iconos para macos
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_menu-39x24.png"))); // NOI18N
 
         text_logo.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         text_logo.setText("Sale Project CRUD");
@@ -179,7 +182,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

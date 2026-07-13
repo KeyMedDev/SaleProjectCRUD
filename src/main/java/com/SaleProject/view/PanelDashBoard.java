@@ -1,12 +1,16 @@
 
 package com.SaleProject.view;
 
+import com.SaleProject.model.MCliente;
+import java.util.ArrayList;
+
 public class PanelDashBoard extends javax.swing.JPanel {
 
     public PanelDashBoard() {
         initComponents();
         initStyle();
         initTimeLine();
+        listarClientesEnTabla();
     }
     
     private void initStyle(){
@@ -20,6 +24,28 @@ public class PanelDashBoard extends javax.swing.JPanel {
         ScrollEventos.putClientProperty("FlatLaf.style", "arc: 16; border: 1,1,1,1,#E5E7EB,1,20;");
         TablaClientes.putClientProperty("FlatLaf.style", "arc: 20; " + "border: 1,1,1,1,#E5E7EB,1,12;");
         txtTimeLine.setContentType("text/html");
+    }
+    
+    private void listarClientesEnTabla() {
+        com.SaleProject.dao.DAOcliente daoCliente = new com.SaleProject.dao.DAOcliente();
+        ArrayList<MCliente> lista = daoCliente.listarClientes();
+
+        // Obtenemos el modelo gráfico de tu JTable
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblClientes.getModel();
+        modelo.setRowCount(0); // Limpiamos registros residuales o antiguos
+
+        if (lista != null) {
+            for (MCliente c : lista) {
+                Object[] fila = new Object[] {
+                    c.getIdCliente(),
+                    c.getDni(),
+                    c.getApPat(),
+                    c.getApMat(),
+                    c.getNombre()
+                };
+                modelo.addRow(fila);
+            }
+        }
     }
     
     private void initTimeLine() {
@@ -75,7 +101,7 @@ public class PanelDashBoard extends javax.swing.JPanel {
         PanelBackground = new javax.swing.JPanel();
         PanelBg02 = new javax.swing.JPanel();
         TablaClientes = new javax.swing.JScrollPane();
-        TblClientes = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
         ScrollEventos = new javax.swing.JScrollPane();
         txtTimeLine = new javax.swing.JTextPane();
         PanelBg01 = new javax.swing.JPanel();
@@ -99,18 +125,18 @@ public class PanelDashBoard extends javax.swing.JPanel {
 
         PanelBg02.setBackground(new java.awt.Color(248, 250, 252));
 
-        TblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Cliente", "DNI", "Ap. Paterno", "Ap. Materno", "Nombre"
             }
         ));
-        TablaClientes.setViewportView(TblClientes);
+        TablaClientes.setViewportView(tblClientes);
 
         ScrollEventos.setPreferredSize(new java.awt.Dimension(432, 465));
 
@@ -216,7 +242,7 @@ public class PanelDashBoard extends javax.swing.JPanel {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         PanelPersonal.setBackground(new java.awt.Color(218, 242, 225));
@@ -320,7 +346,6 @@ public class PanelDashBoard extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPersonal;
     private javax.swing.JScrollPane ScrollEventos;
     private javax.swing.JScrollPane TablaClientes;
-    private javax.swing.JTable TblClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,6 +355,7 @@ public class PanelDashBoard extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextPane txtTimeLine;
     // End of variables declaration//GEN-END:variables
 
