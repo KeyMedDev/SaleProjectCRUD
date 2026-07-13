@@ -1,14 +1,23 @@
 
 package com.SaleProject.view;
 
+import com.SaleProject.dao.DAOcajero;
+import com.SaleProject.model.MCajero;
+import com.SaleProject.model.MLocal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PanelCajeros extends javax.swing.JPanel {
 
     public PanelCajeros() {
         initComponents();
         initStyle();
+        listarCajerosEnTabla();
+        cargarComboLocales();
+        limpiarFormulario();
     }
-    
-    public void initStyle(){
+
+    private void initStyle(){
         this.setOpaque(false);
         // Estilos para el Panel interno
         PanelBgProductos.putClientProperty("FlatLaf.style", "arc: 16; border: 1,1,1,1,#E5E7EB,1,20;");
@@ -18,7 +27,75 @@ public class PanelCajeros extends javax.swing.JPanel {
         // Aseguramos que la tabla no pinte bordes raros por dentro
         tblCajeros.setShowHorizontalLines(true);
         tblCajeros.setShowVerticalLines(false);
+        
+        // Bloqueo de cursor y edicion en el campo de texto "txtFieldIdLocal"
+        txtFieldIdLocal.setEditable(false);  // Bloquea la edición por teclado
+        txtFieldIdLocal.setFocusable(false); // Quita la capacidad de hacer clic o foco
+        // Fuerza a que el cursor conserve el puntero de flecha predeterminado
+        txtFieldIdLocal.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+        // Estilo de campo deshabilitado integrado con FlatLaf
+        txtFieldIdLocal.putClientProperty("FlatLaf.style", "background: #F8FAFC; foreground: #94A3B8;");
     }
+
+    private void listarCajerosEnTabla() {
+        com.SaleProject.dao.DAOcajero daoCajero = new com.SaleProject.dao.DAOcajero();
+        ArrayList<MCajero> lista = daoCajero.listarCajeros();
+
+        // Obtenemos el modelo por defecto del JTable 
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblCajeros.getModel();
+        modelo.setRowCount(0); // Limpiamos filas antiguas
+
+        if (lista != null) {
+            for (MCajero c : lista) {
+                Object[] fila = new Object[] {c.getIdCajero(), c.getNomCajero(), c.getApPat(), c.getApMat(), c.getUsuario(), c.getClave(), c.getIdLocal()};
+                modelo.addRow(fila);
+            }
+        }
+    }
+    
+    private void cargarComboLocales() {
+        com.SaleProject.dao.DAOlocal daoLocal = new com.SaleProject.dao.DAOlocal();
+        List<MLocal> listaLocales = daoLocal.ListarLocal();
+
+        comboLocal.removeAllItems();
+        comboLocal.addItem("Seleccione un local...");
+
+        if (listaLocales != null) {
+            for (MLocal local : listaLocales) {
+                // Mostramos únicamente la dirección en el combo
+                comboLocal.addItem(local.getDireccion());
+            }
+        }
+        // Evento para capturar el cambio de selección en el Combo Box
+        comboLocal.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                    String direccionSeleccionada = comboLocal.getSelectedItem().toString();
+
+                    if (direccionSeleccionada.equals("Seleccione un local...")) {
+                        txtFieldIdLocal.setText(""); // Tu campo de texto para el ID del local
+                        return;
+                    }
+
+                    // Buscamos el ID que le corresponde a esa dirección
+                    if (listaLocales != null) {
+                        for (MLocal local : listaLocales) {
+                            if (local.getDireccion().equals(direccionSeleccionada)) {
+                                txtFieldIdLocal.setText(String.valueOf(local.getIdLocal()));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -69,15 +146,28 @@ public class PanelCajeros extends javax.swing.JPanel {
 
         tblCajeros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Cajero", "Nombre", "Ap. Paterno", "Ap. Materno", "Usuario", "Clave ", "ID Local"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCajeros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCajerosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCajeros);
 
         PanelBgProductos.setBackground(new java.awt.Color(248, 250, 252));
@@ -86,21 +176,32 @@ public class PanelCajeros extends javax.swing.JPanel {
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         txtIdCajero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtIdCajero.setText("ID Cajero");
 
+        txtFieldIdCajero.addActionListener(this::txtFieldIdCajeroActionPerformed);
+
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtNombre.setText("Nombre");
+
+        txtFieldNombre.addActionListener(this::txtFieldNombreActionPerformed);
 
         txtApPaterno.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtApPaterno.setText("Apellido Paterno");
 
+        txtFieldApPaterno.addActionListener(this::txtFieldApPaternoActionPerformed);
+
         txtApMaterno.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtApMaterno.setText("Apellido Materno");
 
+        txtFieldApMaterno.addActionListener(this::txtFieldApMaternoActionPerformed);
+
         txtUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtUsuario.setText("Usuario");
+
+        txtFieldUsuario.addActionListener(this::txtFieldUsuarioActionPerformed);
 
         txtClave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtClave.setText("Clave de Seguridad");
@@ -119,6 +220,7 @@ public class PanelCajeros extends javax.swing.JPanel {
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setPreferredSize(new java.awt.Dimension(112, 35));
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnModificar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnModificar.setText("Modificar");
@@ -128,6 +230,9 @@ public class PanelCajeros extends javax.swing.JPanel {
         comboLocal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboLocal.setMinimumSize(new java.awt.Dimension(72, 35));
         comboLocal.setPreferredSize(new java.awt.Dimension(72, 35));
+        comboLocal.addActionListener(this::comboLocalActionPerformed);
+
+        txtFieldIdLocal.addActionListener(this::txtFieldIdLocalActionPerformed);
 
         javax.swing.GroupLayout PanelBgProductosLayout = new javax.swing.GroupLayout(PanelBgProductos);
         PanelBgProductos.setLayout(PanelBgProductosLayout);
@@ -213,6 +318,7 @@ public class PanelCajeros extends javax.swing.JPanel {
         btnPrimero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPrimero.setText("<<");
         btnPrimero.setPreferredSize(new java.awt.Dimension(60, 35));
+        btnPrimero.addActionListener(this::btnPrimeroActionPerformed);
 
         btnAnterior.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAnterior.setText("<");
@@ -222,6 +328,7 @@ public class PanelCajeros extends javax.swing.JPanel {
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSiguiente.setText(">");
         btnSiguiente.setPreferredSize(new java.awt.Dimension(60, 35));
+        btnSiguiente.addActionListener(this::btnSiguienteActionPerformed);
 
         btnUltimo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUltimo.setText(">>");
@@ -294,11 +401,55 @@ public class PanelCajeros extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFieldBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        try {
+                MCajero nuevoCajero = new MCajero();
+                nuevoCajero.setIdCajero(Integer.parseInt(txtFieldIdCajero.getText().trim()));
+                nuevoCajero.setNomCajero(txtFieldNombre.getText().trim());
+                nuevoCajero.setApPat(txtFieldApPaterno.getText().trim());
+                nuevoCajero.setApMat(txtFieldApMaterno.getText().trim());
+                nuevoCajero.setUsuario(txtFieldUsuario.getText().trim());
+                nuevoCajero.setClave(txtFieldClave.getText().trim());
+                nuevoCajero.setIdLocal(Integer.parseInt(txtFieldIdLocal.getText().trim()));
+
+                DAOcajero dao = new DAOcajero();
+                if (dao.insertarCajero(nuevoCajero)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Cajero registrado exitosamente.");
+                    listarCajerosEnTabla(); 
+                    limpiarFormulario();    
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se pudo registrar el cajero. Verifique que el ID no esté duplicado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El ID del cajero debe ser un número válido.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        if (txtFieldIdCajero.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un cajero de la tabla para modificar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            MCajero cajeroModificado = new MCajero();
+            cajeroModificado.setIdCajero(Integer.parseInt(txtFieldIdCajero.getText().trim()));
+            cajeroModificado.setNomCajero(txtFieldNombre.getText().trim());
+            cajeroModificado.setApPat(txtFieldApPaterno.getText().trim());
+            cajeroModificado.setApMat(txtFieldApMaterno.getText().trim());
+            cajeroModificado.setUsuario(txtFieldUsuario.getText().trim());
+            cajeroModificado.setClave(txtFieldClave.getText().trim());
+            cajeroModificado.setIdLocal(Integer.parseInt(txtFieldIdLocal.getText().trim()));
+
+            DAOcajero dao = new DAOcajero();
+                if (dao.modificarCajero(cajeroModificado)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Datos del cajero actualizados correctamente.");
+                    listarCajerosEnTabla();
+                    limpiarFormulario();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar el cajero.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtFieldClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldClaveActionPerformed
@@ -306,12 +457,196 @@ public class PanelCajeros extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFieldClaveActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
+        int filaSeleccionada = tblCajeros.getSelectedRow();
+
+            // Si no hay fila seleccionada, empezamos desde la primera
+            if (filaSeleccionada == -1) {
+                if (tblCajeros.getRowCount() > 0) {
+                    tblCajeros.setRowSelectionInterval(0, 0);
+                    tblCajerosMouseClicked(null);
+                }
+                return;
+            }
+
+            // Si podemos retroceder, restamos uno
+            if (filaSeleccionada > 0) {
+                int nuevaFila = filaSeleccionada - 1;
+                tblCajeros.setRowSelectionInterval(nuevaFila, nuevaFila);
+                tblCajerosMouseClicked(null);
+        }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
+        int totalFilas = tblCajeros.getRowCount();
+
+            if (totalFilas > 0) {
+                int ultimaFila = totalFilas - 1;
+                // Seleccionamos la última posición
+                tblCajeros.setRowSelectionInterval(ultimaFila, ultimaFila);
+
+                // Sincronizamos las cajas de texto
+                tblCajerosMouseClicked(null);
+        }
     }//GEN-LAST:event_btnUltimoActionPerformed
+
+    private void tblCajerosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCajerosMouseClicked
+        int selectRow = tblCajeros.getSelectedRow();
+
+        if (selectRow >= 0) {
+            try {
+                // Autorrellenar los campos de texto del formulario
+                txtFieldIdCajero.setText(tblCajeros.getValueAt(selectRow, 0).toString());
+                txtFieldNombre.setText(tblCajeros.getValueAt(selectRow, 1).toString());
+                txtFieldApPaterno.setText(tblCajeros.getValueAt(selectRow, 2).toString());
+                txtFieldApMaterno.setText(tblCajeros.getValueAt(selectRow, 3).toString());
+                txtFieldUsuario.setText(tblCajeros.getValueAt(selectRow, 4).toString());
+                txtFieldClave.setText(tblCajeros.getValueAt(selectRow, 5).toString());
+
+                // Recuperar el ID del local asignado a este cajero
+                String idLocalFila = tblCajeros.getValueAt(selectRow, 6).toString();
+                txtFieldIdLocal.setText(idLocalFila); // Coloca el ID en el campo de texto de al lado
+
+                // Forzar al ComboBox a seleccionar la dirección correspondiente a ese ID
+                com.SaleProject.dao.DAOlocal daoLocal = new com.SaleProject.dao.DAOlocal();
+                List<MLocal> locales = daoLocal.ListarLocal();
+
+                if (locales != null) {
+                    for (MLocal local : locales) {
+                        if (String.valueOf(local.getIdLocal()).equals(idLocalFila)) {
+                            comboLocal.setSelectedItem(local.getDireccion()); // Selecciona la dirección en el combo
+                            break;
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al seleccionar los datos: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_tblCajerosMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String textoBusqueda = txtFieldBuscar.getText().trim();
+        // Si el campo de búsqueda está vacío, volvemos a listar todos los cajeros de la BD
+        if (textoBusqueda.isEmpty()) {
+        listarCajerosEnTabla();
+        return;
+        }
+        try {
+            DAOcajero dao = new DAOcajero();
+            ArrayList<MCajero> listaFiltrada = dao.buscarCajeros(textoBusqueda);
+        
+            // Obtenemos el modelo de tu JTable para rellenarla con los resultados del filtro
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblCajeros.getModel();
+            modelo.setRowCount(0); // Limpiamos la tabla antes de inyectar los resultados
+            if (listaFiltrada != null && !listaFiltrada.isEmpty()) {
+                for (MCajero c : listaFiltrada) {
+                    Object[] fila = new Object[] {
+                        c.getIdCajero(),
+                        c.getNomCajero(),
+                        c.getApPat(),
+                        c.getApMat(),
+                        c.getUsuario(),
+                        c.getClave(),
+                        c.getIdLocal()};
+                    modelo.addRow(fila);}
+            } else {
+                // Mensaje opcional o sutil en consola si no se encontraron resultados
+                System.out.println("No se encontraron cajeros con el filtro: " + textoBusqueda);
+            }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtFieldIdCajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldIdCajeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldIdCajeroActionPerformed
+
+    private void txtFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldNombreActionPerformed
+
+    private void txtFieldApPaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldApPaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldApPaternoActionPerformed
+
+    private void txtFieldApMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldApMaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldApMaternoActionPerformed
+
+    private void txtFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldUsuarioActionPerformed
+
+    private void txtFieldIdLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldIdLocalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldIdLocalActionPerformed
+
+    private void comboLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboLocalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboLocalActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        if (txtFieldIdCajero.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un cajero de la tabla para eliminar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idCajero = Integer.parseInt(txtFieldIdCajero.getText().trim());
+        String nombreCompleto = txtFieldNombre.getText() + " " + txtFieldApPaterno.getText();
+
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro de que desea eliminar al cajero '" + nombreCompleto + "'?", 
+            "Confirmar Eliminación", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            DAOcajero dao = new DAOcajero();
+            if (dao.eliminarCajero(idCajero)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Cajero eliminado del sistema.");
+                listarCajerosEnTabla();
+                limpiarFormulario();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se pudo eliminar el cajero.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
+        if (tblCajeros.getRowCount() > 0) {
+                // Seleccionamos la primera fila
+                tblCajeros.setRowSelectionInterval(0, 0);
+
+                // Forzamos el autorrelleno de los campos de texto y combo
+                tblCajerosMouseClicked(null);
+        }
+    }//GEN-LAST:event_btnPrimeroActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        int filaSeleccionada = tblCajeros.getSelectedRow();
+        int totalFilas = tblCajeros.getRowCount();
+
+        // Si no hay fila seleccionada, empezamos desde la primera
+        if (filaSeleccionada == -1) {
+            if (totalFilas > 0) {
+                    tblCajeros.setRowSelectionInterval(0, 0);
+                    tblCajerosMouseClicked(null);
+            }
+            return;
+        }
+
+        // Si podemos avanzar sin salirnos del límite de la tabla
+            if (filaSeleccionada < totalFilas - 1) {
+                int nuevaFila = filaSeleccionada + 1;
+                tblCajeros.setRowSelectionInterval(nuevaFila, nuevaFila);
+                tblCajerosMouseClicked(null);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -347,5 +682,16 @@ public class PanelCajeros extends javax.swing.JPanel {
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables
-
+    
+    private void limpiarFormulario() {
+        txtFieldIdCajero.setText("");
+        txtFieldNombre.setText("");
+        txtFieldApPaterno.setText("");
+        txtFieldApMaterno.setText("");
+        txtFieldUsuario.setText("");
+        txtFieldClave.setText("");
+        txtFieldIdLocal.setText("");
+        comboLocal.setSelectedIndex(0); // Regresa a "Seleccione un local..."
+        tblCajeros.clearSelection();  // Deselecciona la fila en la tabla
+    }
 }

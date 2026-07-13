@@ -1,11 +1,15 @@
 
 package com.SaleProject.view;
 
+import com.SaleProject.model.MProducto;
+import java.util.ArrayList;
+
 public class PanelProductos extends javax.swing.JPanel {
 
     public PanelProductos() {
         initComponents();
         initStyle();
+        listarProductosEnTabla();
     }
     
     public void initStyle(){
@@ -18,6 +22,29 @@ public class PanelProductos extends javax.swing.JPanel {
         // Aseguramos que la tabla no pinte bordes raros por dentro
         tblProductos.setShowHorizontalLines(true);
         tblProductos.setShowVerticalLines(false);
+    }
+    
+    private void listarProductosEnTabla() {
+        com.SaleProject.dao.DAOproducto daoProducto = new com.SaleProject.dao.DAOproducto();
+        ArrayList<MProducto> lista = daoProducto.listarProductos();
+
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblProductos.getModel();
+        modelo.setRowCount(0); // Limpieza preventiva
+
+        if (lista != null) {
+            for (MProducto p : lista) {
+                Object[] fila = new Object[] {
+                    p.getIdProducto(),
+                    p.getDescProducto(),
+                    p.getUnidad(),
+                    p.getPrecioVenta(),
+                    p.getStock(),
+                    p.getMinStock(),
+                    p.getIdCategoria()
+                };
+                modelo.addRow(fila);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -69,13 +96,13 @@ public class PanelProductos extends javax.swing.JPanel {
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Productos", "Desc Producto", "Unidad", "Prec Venta", "Stock", "Min. Stock", "ID Categoria"
             }
         ));
         jScrollPane1.setViewportView(tblProductos);
@@ -284,7 +311,7 @@ public class PanelProductos extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+                .addComponent(PanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -11,7 +11,7 @@ import java.util.List;
 public class DAOlocal {
     public List<MLocal> ListarLocal(){
         Connection cn = connectiondb.getConexion();
-        String sql = "select * from MLocal";
+        String sql = "select * from tlocal";
         Statement st; ResultSet rs = null;
         List<MLocal> list = new ArrayList<>();
 

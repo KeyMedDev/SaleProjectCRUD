@@ -135,4 +135,51 @@ public class DAOcajero {
             }
         }
     }
+    
+    public ArrayList<MCajero> buscarCajeros(String textoBusqueda) {
+        ArrayList<MCajero> lista = new ArrayList<>();
+        // Buscamos coincidencia en nombre, apellido paterno, apellido materno o usuario
+        String sql = "SELECT * FROM tcajero WHERE nomCajero LIKE ? OR apPat LIKE ? OR apMat LIKE ? OR usuario LIKE ?";
+        Connection cn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            cn = connectiondb.getConexion();
+            ps = cn.prepareStatement(sql);
+
+            // Preparamos el filtro rodeando el texto con los comodines %
+            String filtro = "%" + textoBusqueda + "%";
+            ps.setString(1, filtro);
+            ps.setString(2, filtro);
+            ps.setString(3, filtro);
+            ps.setString(4, filtro);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                MCajero c = new MCajero();
+                c.setIdCajero(rs.getInt("idcajero"));
+                c.setNomCajero(rs.getString("nomcajero"));
+                c.setApPat(rs.getString("appat"));
+                c.setApMat(rs.getString("apmat"));
+                c.setUsuario(rs.getString("usuario"));
+                c.setClave(rs.getString("clave"));
+                c.setIdLocal(rs.getInt("idlocal"));
+
+                lista.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al buscar cajeros: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (cn != null) cn.close();
+            } catch (Exception e) {
+                System.out.println("Error al cerrar recursos en buscar: " + e.getMessage());
+            }
+        }
+        return lista;
+    }
 }

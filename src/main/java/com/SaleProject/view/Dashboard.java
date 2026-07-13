@@ -1,4 +1,3 @@
-
 package com.SaleProject.view;
 
 //FlatLaF Themes
