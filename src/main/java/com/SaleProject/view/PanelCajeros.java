@@ -11,7 +11,7 @@ public class PanelCajeros extends javax.swing.JPanel {
     public void initStyle(){
         this.setOpaque(false);
         // Estilos para el Panel interno
-        PanelBgProductos.putClientProperty("FlatLaf.style", "arc: 16; border: 1,1,1,1,#E5E7EB,1,20; focusWidth: 0;");
+        PanelBgProductos.putClientProperty("FlatLaf.style", "arc: 16; border: 1,1,1,1,#E5E7EB,1,20;");
         // Estilos para la tabla
         jScrollPane1.putClientProperty("FlatLaf.style", "arc: 20; " + "border: 1,1,1,1,#E5E7EB,1,12;");
 

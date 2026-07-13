@@ -34,7 +34,7 @@ public class Dashboard extends javax.swing.JFrame {
         PanelContent.setBackground(new java.awt.Color(245, 247, 250)); // gris suave 
 
         // Edicion de tamaño y color
-        text_logo.putClientProperty("FlatLaf.style", "font: $h2.font");
+        //text_logo.putClientProperty("FlatLaf.style", "font: $h2.font");
         text_logo.setForeground(Color.black);
         
         //Estilos para los botones el Menu
