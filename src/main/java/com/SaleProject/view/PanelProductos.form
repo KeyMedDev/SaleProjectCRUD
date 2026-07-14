@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[890, 680]"/>
@@ -130,13 +130,13 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="4">
-                    <Column editable="true" title="ID Productos" type="java.lang.Object"/>
-                    <Column editable="true" title="Desc Producto" type="java.lang.Object"/>
-                    <Column editable="true" title="Unidad" type="java.lang.Object"/>
-                    <Column editable="true" title="Prec Venta" type="java.lang.Object"/>
-                    <Column editable="true" title="Stock" type="java.lang.Object"/>
-                    <Column editable="true" title="Min. Stock" type="java.lang.Object"/>
-                    <Column editable="true" title="ID Categoria" type="java.lang.Object"/>
+                    <Column editable="false" title="ID Productos" type="java.lang.Object"/>
+                    <Column editable="false" title="Desc Producto" type="java.lang.Object"/>
+                    <Column editable="false" title="Unidad" type="java.lang.Object"/>
+                    <Column editable="false" title="Prec Venta" type="java.lang.Object"/>
+                    <Column editable="false" title="Stock" type="java.lang.Object"/>
+                    <Column editable="false" title="Min. Stock" type="java.lang.Object"/>
+                    <Column editable="false" title="ID Categoria" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -182,6 +182,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblProductosMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -296,6 +299,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtIdProducto">
               <Properties>
@@ -306,6 +312,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldIdProducto">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldIdProductoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtDescProd">
               <Properties>
@@ -316,6 +325,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldDescProd">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldDescProdActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtUnidad">
               <Properties>
@@ -326,6 +338,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldUnidad">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldUnidadActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtPrecVenta">
               <Properties>
@@ -336,6 +351,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldPrecVenta">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldPrecVentaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtStock">
               <Properties>
@@ -346,6 +364,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldStock">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldStockActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="txtMinStock">
               <Properties>
@@ -395,6 +416,9 @@
                   <Dimension value="[112, 35]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="btnModificar">
               <Properties>
@@ -427,11 +451,17 @@
                   <Dimension value="[72, 35]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboCategoriaActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFieldCategoria">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldCategoriaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -445,6 +475,9 @@
               <Dimension value="[60, 35]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrimeroActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnAnterior">
           <Properties>
@@ -470,6 +503,9 @@
               <Dimension value="[60, 35]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSiguienteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnUltimo">
           <Properties>

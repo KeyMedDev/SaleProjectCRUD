@@ -1,0 +1,5 @@
+// Direccion de iconos para windons
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
+
+// Direion de iconos para macos
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_menu-39x24.png"))); // NOI18N

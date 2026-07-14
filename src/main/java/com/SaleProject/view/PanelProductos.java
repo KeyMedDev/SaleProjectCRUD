@@ -1,8 +1,10 @@
 
 package com.SaleProject.view;
 
+import com.SaleProject.model.MCategoria;
 import com.SaleProject.model.MProducto;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PanelProductos extends javax.swing.JPanel {
 
@@ -10,6 +12,8 @@ public class PanelProductos extends javax.swing.JPanel {
         initComponents();
         initStyle();
         listarProductosEnTabla();
+        cargarComboCategoria();
+        limpiarFormulario();
     }
     
     public void initStyle(){
@@ -22,6 +26,14 @@ public class PanelProductos extends javax.swing.JPanel {
         // Aseguramos que la tabla no pinte bordes raros por dentro
         tblProductos.setShowHorizontalLines(true);
         tblProductos.setShowVerticalLines(false);
+        
+        // Bloqueo de cursor y edicion en el campo de texto "txtFieldIdLocal"
+        txtFieldCategoria.setEditable(false);  // Bloquea la edición por teclado
+        txtFieldCategoria.setFocusable(false); // Quita la capacidad de hacer clic o foco
+        // Fuerza a que el cursor conserve el puntero de flecha predeterminado
+        txtFieldCategoria.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+        // Estilo de campo deshabilitado integrado con FlatLaf
+        txtFieldCategoria.putClientProperty("FlatLaf.style", "background: #F8FAFC; foreground: #94A3B8;");
     }
     
     private void listarProductosEnTabla() {
@@ -46,7 +58,45 @@ public class PanelProductos extends javax.swing.JPanel {
             }
         }
     }
+    
+    private void cargarComboCategoria(){
+        com.SaleProject.dao.DAOcategoria daoCategoria = new com.SaleProject.dao.DAOcategoria();
+        List<MCategoria> listaCategorias = daoCategoria.ListarCategoria();
 
+        comboCategoria.removeAllItems();
+        comboCategoria.addItem("Seleccione una categoria...");
+
+        if (listaCategorias != null) {
+            for (MCategoria categoria : listaCategorias) {
+                // Mostramos únicamente la descripción en el combo
+                comboCategoria.addItem(categoria.getDescCategoria());
+            }
+        }
+        comboCategoria.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                    String descSeleccionada = comboCategoria.getSelectedItem().toString();
+
+                    if (descSeleccionada.equals("Seleccione una categoria...")) {
+                        txtFieldCategoria.setText(""); // Tu campo de texto para el ID de la categoría
+                        return;
+                    }
+
+                    // Buscamos el ID que le corresponde a esa descripción
+                    if (listaCategorias != null) {
+                        for (MCategoria categoria : listaCategorias) {
+                            if (categoria.getDescCategoria().equals(descSeleccionada)) {
+                                txtFieldCategoria.setText(String.valueOf(categoria.getIdCategoria()));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,7 +154,20 @@ public class PanelProductos extends javax.swing.JPanel {
             new String [] {
                 "ID Productos", "Desc Producto", "Unidad", "Prec Venta", "Stock", "Min. Stock", "ID Categoria"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProductos);
 
         PanelBgProductos.setBackground(new java.awt.Color(248, 250, 252));
@@ -113,21 +176,32 @@ public class PanelProductos extends javax.swing.JPanel {
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         txtIdProducto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtIdProducto.setText("ID Producto");
 
+        txtFieldIdProducto.addActionListener(this::txtFieldIdProductoActionPerformed);
+
         txtDescProd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtDescProd.setText("Descripción de Producto");
+
+        txtFieldDescProd.addActionListener(this::txtFieldDescProdActionPerformed);
 
         txtUnidad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtUnidad.setText("Unidad");
 
+        txtFieldUnidad.addActionListener(this::txtFieldUnidadActionPerformed);
+
         txtPrecVenta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtPrecVenta.setText("Precio de Venta");
 
+        txtFieldPrecVenta.addActionListener(this::txtFieldPrecVentaActionPerformed);
+
         txtStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtStock.setText("Stock");
+
+        txtFieldStock.addActionListener(this::txtFieldStockActionPerformed);
 
         txtMinStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtMinStock.setText("Stock Minimo");
@@ -146,6 +220,7 @@ public class PanelProductos extends javax.swing.JPanel {
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setPreferredSize(new java.awt.Dimension(112, 35));
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnModificar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnModificar.setText("Modificar");
@@ -155,6 +230,9 @@ public class PanelProductos extends javax.swing.JPanel {
         comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboCategoria.setMinimumSize(new java.awt.Dimension(72, 35));
         comboCategoria.setPreferredSize(new java.awt.Dimension(72, 35));
+        comboCategoria.addActionListener(this::comboCategoriaActionPerformed);
+
+        txtFieldCategoria.addActionListener(this::txtFieldCategoriaActionPerformed);
 
         javax.swing.GroupLayout PanelBgProductosLayout = new javax.swing.GroupLayout(PanelBgProductos);
         PanelBgProductos.setLayout(PanelBgProductosLayout);
@@ -240,6 +318,7 @@ public class PanelProductos extends javax.swing.JPanel {
         btnPrimero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPrimero.setText("<<");
         btnPrimero.setPreferredSize(new java.awt.Dimension(60, 35));
+        btnPrimero.addActionListener(this::btnPrimeroActionPerformed);
 
         btnAnterior.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAnterior.setText("<");
@@ -249,6 +328,7 @@ public class PanelProductos extends javax.swing.JPanel {
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSiguiente.setText(">");
         btnSiguiente.setPreferredSize(new java.awt.Dimension(60, 35));
+        btnSiguiente.addActionListener(this::btnSiguienteActionPerformed);
 
         btnUltimo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUltimo.setText(">>");
@@ -321,11 +401,55 @@ public class PanelProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFieldBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        try {
+            com.SaleProject.model.MProducto nuevoProducto = new com.SaleProject.model.MProducto();
+            nuevoProducto.setIdProducto(Integer.parseInt(txtFieldIdProducto.getText().trim()));
+            nuevoProducto.setDescProducto(txtFieldDescProd.getText().trim());
+            nuevoProducto.setUnidad(txtFieldUnidad.getText().trim());
+            nuevoProducto.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim())); // Usa Double.parseDouble
+            nuevoProducto.setStock(Integer.parseInt(txtFieldStock.getText().trim()));            // Usa tu int de MProducto
+            nuevoProducto.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));      // Usa tu int de MProducto
+            nuevoProducto.setIdCategoria(Integer.parseInt(txtFieldCategoria.getText().trim()));
+
+            com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+            if (dao.insertarProducto(nuevoProducto)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Producto registrado exitosamente.");
+                listarProductosEnTabla(); 
+                limpiarFormulario();    
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se pudo registrar el producto. Verifique que el ID no esté duplicado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Asegúrese de ingresar números válidos en ID, Precio, Stock, Stock Mínimo y Categoría.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+    if (txtFieldIdProducto.getText().trim().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla para modificar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    try {
+        com.SaleProject.model.MProducto productoModificado = new com.SaleProject.model.MProducto();
+        productoModificado.setIdProducto(Integer.parseInt(txtFieldIdProducto.getText().trim()));
+        productoModificado.setDescProducto(txtFieldDescProd.getText().trim());
+        productoModificado.setUnidad(txtFieldUnidad.getText().trim());
+        productoModificado.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim()));
+        productoModificado.setStock(Integer.parseInt(txtFieldStock.getText().trim()));
+        productoModificado.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));
+        productoModificado.setIdCategoria(Integer.parseInt(txtFieldCategoria.getText().trim()));
+
+        com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+        if (dao.modificarProducto(productoModificado)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos del producto actualizados correctamente.");
+            listarProductosEnTabla();
+            limpiarFormulario();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtFieldMinStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMinStockActionPerformed
@@ -333,12 +457,200 @@ public class PanelProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFieldMinStockActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
+        int filaSeleccionada = tblProductos.getSelectedRow();
+
+            // Si no hay fila seleccionada, empezamos desde la primera
+            if (filaSeleccionada == -1) {
+                if (tblProductos.getRowCount() > 0) {
+                    tblProductos.setRowSelectionInterval(0, 0);
+                    tblProductosMouseClicked(null);
+                }
+                return;
+            }
+
+            // Si podemos retroceder, restamos uno
+            if (filaSeleccionada > 0) {
+                int nuevaFila = filaSeleccionada - 1;
+                tblProductos.setRowSelectionInterval(nuevaFila, nuevaFila);
+                tblProductosMouseClicked(null);
+        }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
+        int totalFilas = tblProductos.getRowCount();
+
+            if (totalFilas > 0) {
+                int ultimaFila = totalFilas - 1;
+                // Seleccionamos la última posición
+                tblProductos.setRowSelectionInterval(ultimaFila, ultimaFila);
+
+                // Sincronizamos las cajas de texto
+                tblProductosMouseClicked(null);
+        }
     }//GEN-LAST:event_btnUltimoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (txtFieldIdProducto.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla para eliminar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idProducto = Integer.parseInt(txtFieldIdProducto.getText().trim());
+        String descripcionProducto = txtFieldDescProd.getText().trim();
+
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro de que desea eliminar el producto '" + descripcionProducto + "'?", 
+            "Confirmar Eliminación", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+            if (dao.eliminarProducto(idProducto)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Producto eliminado del sistema.");
+                listarProductosEnTabla();
+                limpiarFormulario();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se pudo eliminar el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String textoBusqueda = txtFieldBuscar.getText().trim();
+
+        // Si el campo de búsqueda está vacío, volvemos a listar todos los productos de la BD
+        if (textoBusqueda.isEmpty()) {
+            listarProductosEnTabla(); // Tu método para cargar todos los productos sin filtros
+            return;
+        }
+
+        try {
+            com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+
+            // Convertimos la lista devuelta por el DAO a List (siguiendo tu estándar de List en lugar de ArrayList)
+            java.util.List<com.SaleProject.model.MProducto> listaFiltrada = dao.buscarProductos(textoBusqueda);
+
+            // Obtenemos el modelo de tu JTable para rellenarla con los resultados del filtro
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblProductos.getModel();
+            modelo.setRowCount(0); // Limpiamos la tabla antes de inyectar los resultados
+
+            if (listaFiltrada != null && !listaFiltrada.isEmpty()) {
+                for (com.SaleProject.model.MProducto p : listaFiltrada) {
+                    Object[] fila = new Object[] {
+                        p.getIdProducto(),
+                        p.getDescProducto(),
+                        p.getUnidad(),
+                        p.getPrecioVenta(),
+                        p.getStock(),
+                        p.getMinStock(),
+                        p.getIdCategoria()
+                    };
+                    modelo.addRow(fila);
+                }
+            } else {
+                // Mensaje opcional o sutil en consola si no se encontraron resultados
+                System.out.println("No se encontraron productos con el filtro: " + textoBusqueda);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtFieldIdProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldIdProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldIdProductoActionPerformed
+
+    private void txtFieldDescProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldDescProdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldDescProdActionPerformed
+
+    private void txtFieldUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldUnidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldUnidadActionPerformed
+
+    private void txtFieldPrecVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldPrecVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldPrecVentaActionPerformed
+
+    private void txtFieldStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldStockActionPerformed
+
+    private void txtFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldCategoriaActionPerformed
+
+    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaActionPerformed
+
+    private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+        int selectRow = tblProductos.getSelectedRow();
+
+        if (selectRow >= 0) {
+            try {
+                // Autorrellenar los campos de texto del formulario de Productos
+                txtFieldIdProducto.setText(tblProductos.getValueAt(selectRow, 0).toString());
+                txtFieldDescProd.setText(tblProductos.getValueAt(selectRow, 1).toString());
+                txtFieldUnidad.setText(tblProductos.getValueAt(selectRow, 2).toString());
+                txtFieldPrecVenta.setText(tblProductos.getValueAt(selectRow, 3).toString());
+                txtFieldStock.setText(tblProductos.getValueAt(selectRow, 4).toString());
+                txtFieldMinStock.setText(tblProductos.getValueAt(selectRow, 5).toString());
+
+                // Recuperar el ID de la categoría asignada a este producto
+                String idCategoriaFila = tblProductos.getValueAt(selectRow, 6).toString();
+                txtFieldCategoria.setText(idCategoriaFila); // Coloca el ID en el campo de texto de al lado
+
+                // Forzar al ComboBox a seleccionar la descripción de la categoría correspondiente a ese ID
+                com.SaleProject.dao.DAOcategoria daoCategoria = new com.SaleProject.dao.DAOcategoria();
+                List<MCategoria> categorias = daoCategoria.ListarCategoria();
+
+                if (categorias != null) {
+                    for (MCategoria categoria : categorias) {
+                        if (String.valueOf(categoria.getIdCategoria()).equals(idCategoriaFila)) {
+                            comboCategoria.setSelectedItem(categoria.getDescCategoria()); // Selecciona la descripción en el combo
+                            break;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al seleccionar los datos: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_tblProductosMouseClicked
+
+    private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
+        if (tblProductos.getRowCount() > 0) {
+                // Seleccionamos la primera fila
+                tblProductos.setRowSelectionInterval(0, 0);
+                // Forzamos el autorrelleno de los campos de texto y combo
+                tblProductosMouseClicked(null);
+        }
+    }//GEN-LAST:event_btnPrimeroActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        int totalFilas = tblProductos.getRowCount();
+
+        // Si no hay fila seleccionada, empezamos desde la primera
+        if (filaSeleccionada == -1) {
+            if (totalFilas > 0) {
+                    tblProductos.setRowSelectionInterval(0, 0);
+                    tblProductosMouseClicked(null);
+            }
+            return;
+        }
+
+        // Si podemos avanzar sin salirnos del límite de la tabla
+            if (filaSeleccionada < totalFilas - 1) {
+                int nuevaFila = filaSeleccionada + 1;
+                tblProductos.setRowSelectionInterval(nuevaFila, nuevaFila);
+                tblProductosMouseClicked(null);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -375,4 +687,15 @@ public class PanelProductos extends javax.swing.JPanel {
     private javax.swing.JLabel txtUnidad;
     // End of variables declaration//GEN-END:variables
 
+        private void limpiarFormulario() {
+        txtFieldIdProducto.setText("");
+        txtFieldDescProd.setText("");
+        txtFieldUnidad.setText("");
+        txtFieldPrecVenta.setText("");
+        txtFieldStock.setText("");
+        txtFieldMinStock.setText("");
+        txtFieldCategoria.setText("");
+        comboCategoria.setSelectedIndex(0); // Regresa a "Seleccione un local..."
+        tblProductos.clearSelection();  // Deselecciona la fila en la tabla
+    }
 }

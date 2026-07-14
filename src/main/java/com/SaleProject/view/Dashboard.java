@@ -88,10 +88,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setPreferredSize(new java.awt.Dimension(270, 720));
 
-        // Direccion de iconos para windons
-        //logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
-        // Direion de iconos para macos
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_menu-39x24.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
 
         text_logo.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         text_logo.setText("Sale Project CRUD");
@@ -163,6 +160,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnSalir.setBorderPainted(false);
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalir.setIconTextGap(20);
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
@@ -182,7 +180,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,6 +272,20 @@ public class Dashboard extends javax.swing.JFrame {
         showPanel(new PanelCajeros());
     }//GEN-LAST:event_btnCajerosActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro de que desea salir del sistema?", 
+            "Cerrar Aplicación", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }    
+    
     public static void main(String args[]) {
         FlatGrayIJTheme.setup();    
         

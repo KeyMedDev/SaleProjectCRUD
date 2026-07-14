@@ -91,11 +91,6 @@ public class PanelCajeros extends javax.swing.JPanel {
             }
         });
     }
-    
-    
-    
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
