@@ -15,4 +15,5 @@ Inicia un CMD e ingresa el siguiente comando:
 ```bash
 git clone https://github.com/KeyMedDev/SaleProjectCRUD
 ```
+o puedes decargarlo desde el siguiente enlace: https://goo.su/d9rYuxX
 
