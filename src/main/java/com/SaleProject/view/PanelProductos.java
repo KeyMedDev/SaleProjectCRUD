@@ -28,8 +28,8 @@ public class PanelProductos extends javax.swing.JPanel {
         tblProductos.setShowVerticalLines(false);
         
         // Bloqueo de cursor y edicion en el campo de texto "txtFieldIdLocal"
-        txtFieldCategoria.setEditable(false);  // Bloquea la edición por teclado
-        txtFieldCategoria.setFocusable(false); // Quita la capacidad de hacer clic o foco
+        txtFieldCategoria.setEditable(false);           // Bloquea la edición por teclado
+        txtFieldCategoria.setFocusable(false);    // Quita la capacidad de hacer clic o foco
         // Fuerza a que el cursor conserve el puntero de flecha predeterminado
         txtFieldCategoria.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         // Estilo de campo deshabilitado integrado con FlatLaf
@@ -37,15 +37,17 @@ public class PanelProductos extends javax.swing.JPanel {
     }
     
     private void listarProductosEnTabla() {
+        // Instancia el DAO de productos para interactuar con la base de datos
         com.SaleProject.dao.DAOproducto daoProducto = new com.SaleProject.dao.DAOproducto();
+        // Obtiene la lista completa de productos llamando al metodo del DAO
         ArrayList<MProducto> lista = daoProducto.listarProductos();
-
+        // Obtiene el modelo de la tabla para manipular sus filas dinamicamente
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblProductos.getModel();
         modelo.setRowCount(0); // Limpieza preventiva
 
-        if (lista != null) {
-            for (MProducto p : lista) {
-                Object[] fila = new Object[] {
+        if (lista != null) {    //Valida que la lista de productos obtenida no sea nula
+            for (MProducto p : lista) {     // Recorre cada producto de la lista mediante un ciclo for-each
+                Object[] fila = new Object[] {  // Crea un arreglo de objetos mapeando las propiedades del producto
                     p.getIdProducto(),
                     p.getDescProducto(),
                     p.getUnidad(),
@@ -54,39 +56,46 @@ public class PanelProductos extends javax.swing.JPanel {
                     p.getMinStock(),
                     p.getIdCategoria()
                 };
+                // Agrega el arreglo como una nueva fila en el modelo de la tabla
                 modelo.addRow(fila);
             }
         }
     }
     
     private void cargarComboCategoria(){
+        // Instancia el DAO de categorias para interactuar con la base de datos
         com.SaleProject.dao.DAOcategoria daoCategoria = new com.SaleProject.dao.DAOcategoria();
+        // Obtiene la lista completa de categorias desde la base de datos
         List<MCategoria> listaCategorias = daoCategoria.ListarCategoria();
-
+        // Limpia todos los elementos previos del combobox para evitar duplicados
         comboCategoria.removeAllItems();
-        comboCategoria.addItem("Seleccione una categoria...");
+        comboCategoria.addItem("Seleccione una categoria..."); // Agrega una opcion por defecto para guiar al usuario en la interfaz
 
         if (listaCategorias != null) {
             for (MCategoria categoria : listaCategorias) {
                 // Mostramos únicamente la descripción en el combo
-                comboCategoria.addItem(categoria.getDescCategoria());
+                comboCategoria.addItem(categoria.getDescCategoria());   
             }
         }
+        // Define el escuchador de eventos para detectar cuando el usuario cambia de opcion
         comboCategoria.addItemListener(new java.awt.event.ItemListener() {
             @Override
             public void itemStateChanged(java.awt.event.ItemEvent e) {
+                // Evalua si el evento corresponde a una seleccion confirmada
                 if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                    // Convierte a texto la opcion seleccionada por el usuario
                     String descSeleccionada = comboCategoria.getSelectedItem().toString();
-
+                    // Controla si se volvio a seleccionar la opcion por defecto
                     if (descSeleccionada.equals("Seleccione una categoria...")) {
                         txtFieldCategoria.setText(""); // Tu campo de texto para el ID de la categoría
-                        return;
+                        return;     // Termina el proceso para la seleccion
                     }
-
                     // Buscamos el ID que le corresponde a esa descripción
                     if (listaCategorias != null) {
+                        // Recorre la lista para encontrar el objeto que coincide con el texto
                         for (MCategoria categoria : listaCategorias) {
                             if (categoria.getDescCategoria().equals(descSeleccionada)) {
+                                // Pinta el ID correspondiente en el campo de texto asignado
                                 txtFieldCategoria.setText(String.valueOf(categoria.getIdCategoria()));
                                 break;
                             }
@@ -402,54 +411,64 @@ public class PanelProductos extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
+            // Instancia un nuevo objeto de tipo MProducto para almacenar los datos del formulario
             com.SaleProject.model.MProducto nuevoProducto = new com.SaleProject.model.MProducto();
+            // Recupera y convierte los datos ingresados en la interfaz para asignarlos al modelo
             nuevoProducto.setIdProducto(Integer.parseInt(txtFieldIdProducto.getText().trim()));
             nuevoProducto.setDescProducto(txtFieldDescProd.getText().trim());
             nuevoProducto.setUnidad(txtFieldUnidad.getText().trim());
-            nuevoProducto.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim())); // Usa Double.parseDouble
-            nuevoProducto.setStock(Integer.parseInt(txtFieldStock.getText().trim()));            // Usa tu int de MProducto
-            nuevoProducto.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));      // Usa tu int de MProducto
+            nuevoProducto.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim())); 
+            nuevoProducto.setStock(Integer.parseInt(txtFieldStock.getText().trim()));            
+            nuevoProducto.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));      
             nuevoProducto.setIdCategoria(Integer.parseInt(txtFieldCategoria.getText().trim()));
-
+            // Instancia la clase de acceso a datos para proceder con la insercion
             com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+            // Evalua si la insercion en la base de datos se realizo correctamente
             if (dao.insertarProducto(nuevoProducto)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Producto registrado exitosamente.");
-                listarProductosEnTabla(); 
-                limpiarFormulario();    
+                listarProductosEnTabla(); // Refresca la tabla visual con el nuevo registro
+                limpiarFormulario();    // Restablece los campos de texto del formulario
             } else {
+                // Notifica al usuario en caso de que la clave primaria este duplicada o falle la BD
                 javax.swing.JOptionPane.showMessageDialog(this, "No se pudo registrar el producto. Verifique que el ID no esté duplicado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
+            // Controla errores si el usuario ingresa texto en campos estrictamente numericos
             javax.swing.JOptionPane.showMessageDialog(this, "Asegúrese de ingresar números válidos en ID, Precio, Stock, Stock Mínimo y Categoría.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    if (txtFieldIdProducto.getText().trim().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla para modificar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    try {
-        com.SaleProject.model.MProducto productoModificado = new com.SaleProject.model.MProducto();
-        productoModificado.setIdProducto(Integer.parseInt(txtFieldIdProducto.getText().trim()));
-        productoModificado.setDescProducto(txtFieldDescProd.getText().trim());
-        productoModificado.setUnidad(txtFieldUnidad.getText().trim());
-        productoModificado.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim()));
-        productoModificado.setStock(Integer.parseInt(txtFieldStock.getText().trim()));
-        productoModificado.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));
-        productoModificado.setIdCategoria(Integer.parseInt(txtFieldCategoria.getText().trim()));
-
-        com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
-        if (dao.modificarProducto(productoModificado)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos del producto actualizados correctamente.");
-            listarProductosEnTabla();
-            limpiarFormulario();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        // Valida preventivamente que se haya seleccionado un producto de la tabla verificando que el ID no este vacio
+        if (txtFieldIdProducto.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla para modificar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+        try {
+            // Instancia un nuevo objeto MProducto para almacenar los datos actualizados del formulario
+            com.SaleProject.model.MProducto productoModificado = new com.SaleProject.model.MProducto();
+            // Recupera y convierte los valores modificados en la interfaz para asignarlos al modelo
+            productoModificado.setIdProducto(Integer.parseInt(txtFieldIdProducto.getText().trim()));
+            productoModificado.setDescProducto(txtFieldDescProd.getText().trim());
+            productoModificado.setUnidad(txtFieldUnidad.getText().trim());
+            productoModificado.setPrecioVenta(Double.parseDouble(txtFieldPrecVenta.getText().trim()));
+            productoModificado.setStock(Integer.parseInt(txtFieldStock.getText().trim()));
+            productoModificado.setMinStock(Integer.parseInt(txtFieldMinStock.getText().trim()));
+            productoModificado.setIdCategoria(Integer.parseInt(txtFieldCategoria.getText().trim()));
+            // Instancia la clase de acceso a datos para proceder con la actualizacion
+            com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+            if (dao.modificarProducto(productoModificado)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Datos del producto actualizados correctamente.");
+                listarProductosEnTabla();
+                limpiarFormulario();
+            } else {
+                // Notifica al usuario en caso de que ocurra un error interno en la base de datos
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar el producto.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            // Controla errores si el usuario ingresa caracteres no validos en los campos numericos
+            javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos numéricos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtFieldMinStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMinStockActionPerformed
@@ -458,7 +477,6 @@ public class PanelProductos extends javax.swing.JPanel {
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         int filaSeleccionada = tblProductos.getSelectedRow();
-
             // Si no hay fila seleccionada, empezamos desde la primera
             if (filaSeleccionada == -1) {
                 if (tblProductos.getRowCount() > 0) {
@@ -467,7 +485,6 @@ public class PanelProductos extends javax.swing.JPanel {
                 }
                 return;
             }
-
             // Si podemos retroceder, restamos uno
             if (filaSeleccionada > 0) {
                 int nuevaFila = filaSeleccionada - 1;
@@ -478,26 +495,25 @@ public class PanelProductos extends javax.swing.JPanel {
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
         int totalFilas = tblProductos.getRowCount();
-
             if (totalFilas > 0) {
                 int ultimaFila = totalFilas - 1;
                 // Seleccionamos la última posición
                 tblProductos.setRowSelectionInterval(ultimaFila, ultimaFila);
-
                 // Sincronizamos las cajas de texto
                 tblProductosMouseClicked(null);
         }
     }//GEN-LAST:event_btnUltimoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Valida preventivamente que se haya seleccionado un producto verificando que el ID no este vacio
         if (txtFieldIdProducto.getText().trim().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla para eliminar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        // Recupera el ID numerico del producto y su descripcion para personalizar el mensaje
         int idProducto = Integer.parseInt(txtFieldIdProducto.getText().trim());
         String descripcionProducto = txtFieldDescProd.getText().trim();
-
+        // Despliega un cuadro de dialogo interactivo para confirmar si el usuario realmente desea proceder
         int respuesta = javax.swing.JOptionPane.showConfirmDialog(
             this, 
             "¿Está seguro de que desea eliminar el producto '" + descripcionProducto + "'?", 
@@ -505,9 +521,10 @@ public class PanelProductos extends javax.swing.JPanel {
             javax.swing.JOptionPane.YES_NO_OPTION, 
             javax.swing.JOptionPane.QUESTION_MESSAGE
         );
-
+        // Si el usuario confirma con YES, se procede con la eliminacion fisica en la base de datos
         if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
             com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
+            // Ejecuta el metodo de eliminacion en el DAO y evalua el resultado
             if (dao.eliminarProducto(idProducto)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Producto eliminado del sistema.");
                 listarProductosEnTabla();
@@ -519,27 +536,26 @@ public class PanelProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // Obtiene el texto de busqueda ingresado eliminando espacios vacios en los extremos
         String textoBusqueda = txtFieldBuscar.getText().trim();
-
         // Si el campo de búsqueda está vacío, volvemos a listar todos los productos de la BD
         if (textoBusqueda.isEmpty()) {
-            listarProductosEnTabla(); // Tu método para cargar todos los productos sin filtros
+            listarProductosEnTabla(); // Metodo para cargar todos los productos sin filtros
             return;
         }
-
         try {
+            // Instancia el objeto de acceso a datos de productos
             com.SaleProject.dao.DAOproducto dao = new com.SaleProject.dao.DAOproducto();
-
-            // Convertimos la lista devuelta por el DAO a List (siguiendo tu estándar de List en lugar de ArrayList)
+            // Convertimos la lista devuelta por el DAO a List 
             java.util.List<com.SaleProject.model.MProducto> listaFiltrada = dao.buscarProductos(textoBusqueda);
-
             // Obtenemos el modelo de tu JTable para rellenarla con los resultados del filtro
             javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblProductos.getModel();
             modelo.setRowCount(0); // Limpiamos la tabla antes de inyectar los resultados
-
+            // Verifica que la lista filtrada no sea nula ni se encuentre vacia
             if (listaFiltrada != null && !listaFiltrada.isEmpty()) {
+                // Recorre la lista de productos que coinciden con el filtro ingresado
                 for (com.SaleProject.model.MProducto p : listaFiltrada) {
-                    Object[] fila = new Object[] {
+                    Object[] fila = new Object[] { // Crea una fila con los valores de los atributos del producto
                         p.getIdProducto(),
                         p.getDescProducto(),
                         p.getUnidad(),
@@ -551,10 +567,11 @@ public class PanelProductos extends javax.swing.JPanel {
                     modelo.addRow(fila);
                 }
             } else {
-                // Mensaje opcional o sutil en consola si no se encontraron resultados
+                // Mensaje opcional si no se encontraron resultados
                 System.out.println("No se encontraron productos con el filtro: " + textoBusqueda);
             }
         } catch (Exception e) {
+            // Captura cualquier error inesperado y muestra un mensaje emergente
             javax.swing.JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -588,8 +605,9 @@ public class PanelProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_comboCategoriaActionPerformed
 
     private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+        // Obtiene el indice de la fila seleccionada por el usuario en la tabla
         int selectRow = tblProductos.getSelectedRow();
-
+        // Evalua si realmente se selecciono una fila valida
         if (selectRow >= 0) {
             try {
                 // Autorrellenar los campos de texto del formulario de Productos
@@ -599,17 +617,19 @@ public class PanelProductos extends javax.swing.JPanel {
                 txtFieldPrecVenta.setText(tblProductos.getValueAt(selectRow, 3).toString());
                 txtFieldStock.setText(tblProductos.getValueAt(selectRow, 4).toString());
                 txtFieldMinStock.setText(tblProductos.getValueAt(selectRow, 5).toString());
-
+                
                 // Recuperar el ID de la categoría asignada a este producto
                 String idCategoriaFila = tblProductos.getValueAt(selectRow, 6).toString();
                 txtFieldCategoria.setText(idCategoriaFila); // Coloca el ID en el campo de texto de al lado
-
+                
                 // Forzar al ComboBox a seleccionar la descripción de la categoría correspondiente a ese ID
                 com.SaleProject.dao.DAOcategoria daoCategoria = new com.SaleProject.dao.DAOcategoria();
                 List<MCategoria> categorias = daoCategoria.ListarCategoria();
 
                 if (categorias != null) {
+                    // Recorre la lista para encontrar la coincidencia del ID
                     for (MCategoria categoria : categorias) {
+                        // Compara el ID de la iteracion con el ID de la fila seleccionada
                         if (String.valueOf(categoria.getIdCategoria()).equals(idCategoriaFila)) {
                             comboCategoria.setSelectedItem(categoria.getDescCategoria()); // Selecciona la descripción en el combo
                             break;
@@ -634,7 +654,6 @@ public class PanelProductos extends javax.swing.JPanel {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int filaSeleccionada = tblProductos.getSelectedRow();
         int totalFilas = tblProductos.getRowCount();
-
         // Si no hay fila seleccionada, empezamos desde la primera
         if (filaSeleccionada == -1) {
             if (totalFilas > 0) {
@@ -643,7 +662,6 @@ public class PanelProductos extends javax.swing.JPanel {
             }
             return;
         }
-
         // Si podemos avanzar sin salirnos del límite de la tabla
             if (filaSeleccionada < totalFilas - 1) {
                 int nuevaFila = filaSeleccionada + 1;

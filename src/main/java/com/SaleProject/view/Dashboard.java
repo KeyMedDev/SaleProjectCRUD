@@ -16,14 +16,15 @@ public class Dashboard extends javax.swing.JFrame {
         initContent();
    }
     
+// Define cual sera el priemr Jpanel en parecer en el JFrame
     private void initContent(){
         showPanel(new PanelDashBoard());
     }
     
     private void showPanel(JPanel p){
-        PanelContent.removeAll();
-        PanelContent.add(p, java.awt.BorderLayout.CENTER);
-        PanelContent.revalidate();
+        PanelContent.removeAll(); //Limpia la pantalla
+        PanelContent.add(p, java.awt.BorderLayout.CENTER); //Inyecta el nuevo panel
+        PanelContent.revalidate(); //Recalcula el diseño
         PanelContent.repaint();
     }
     
@@ -33,8 +34,7 @@ public class Dashboard extends javax.swing.JFrame {
         PanelContent.setBackground(new java.awt.Color(245, 247, 250)); // gris suave 
 
         // Edicion de tamaño y color
-        //text_logo.putClientProperty("FlatLaf.style", "font: $h2.font");
-        text_logo.setForeground(Color.black);
+        //text_logo.setForeground(Color.black);
         
         //Estilos para los botones el Menu
         String estiloMenu = 
@@ -250,7 +250,6 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        // TODO add your handling code here:
         showPanel(new PanelProductos());
     }//GEN-LAST:event_btnProductoActionPerformed
 
@@ -263,12 +262,10 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        // TODO add your handling code here:
         showPanel(new PanelDashBoard());
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnCajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCajerosActionPerformed
-        // TODO add your handling code here:
         showPanel(new PanelCajeros());
     }//GEN-LAST:event_btnCajerosActionPerformed
 

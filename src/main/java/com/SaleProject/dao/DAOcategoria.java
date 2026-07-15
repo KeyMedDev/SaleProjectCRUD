@@ -11,26 +11,28 @@ import java.util.List;
 public class DAOcategoria {
 
     public List<MCategoria> ListarCategoria() {
+        // Establece la conexion inicial con la base de datos
         Connection cn = connectiondb.getConexion();
         String sql = "select * from tcategoria";
         Statement st = null; 
         ResultSet rs = null;
         List<MCategoria> list = new ArrayList<>();
 
-        try {
+        try {   // Inicializa el objeto statement y ejecuta la consulta de seleccion
             st = cn.createStatement();
             rs = st.executeQuery(sql);
-
+            // Recorre los registros obtenidos de la tabla tcategoria
             while (rs.next()) {
                 int idCategoria = rs.getInt("idCategoria");
                 String descCategoria = rs.getString("descCategoria");
-                
+                // Instancia el objeto modelo usando el constructor parametrizado
                 MCategoria oCategoria = new MCategoria(idCategoria, descCategoria);
                 list.add(oCategoria);
             }
             return list;
         }
         catch (Exception e) {
+            // Captura e informa posibles fallos durante la ejecucion de la consulta
             System.out.println("Error en DAOcategoria.ListarCategoria: " + e.toString());
             return null;
         }

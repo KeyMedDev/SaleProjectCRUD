@@ -135,8 +135,8 @@
                     <Column editable="false" title="Ap. Paterno" type="java.lang.Object"/>
                     <Column editable="false" title="Ap. Materno" type="java.lang.Object"/>
                     <Column editable="false" title="Usuario" type="java.lang.Object"/>
-                    <Column editable="true" title="Clave " type="java.lang.Object"/>
-                    <Column editable="true" title="ID Local" type="java.lang.Object"/>
+                    <Column editable="false" title="Clave " type="java.lang.Object"/>
+                    <Column editable="false" title="ID Local" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

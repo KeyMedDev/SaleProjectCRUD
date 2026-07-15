@@ -1,15 +1,17 @@
 package com.SaleProject.model;
 
 public class MProducto {
+    //Atributos Privados (Encapsulamiento de datos)
     private int idProducto;
     private String descProducto;
     private String unidad;
-    private double precioVenta; // Usamos double primitivo para precisión monetaria sutil
+    private double precioVenta; // Usamos double primitivo para precision monetaria sutil
     private int stock;
     private int minStock;
     private int idCategoria;
-    
-    // Constructor Vacío
+
+     //Constructor Vacío
+     //Inicializa las propiedades con valores por defecto neutros para evitar nulos.
     public MProducto() {
         this.idProducto = 0;
         this.descProducto = "";
@@ -19,8 +21,9 @@ public class MProducto {
         this.minStock = 0;
         this.idCategoria = 0;
     }
-    
-    // Constructor Lleno
+
+     // Constructor Lleno
+     // Permite instanciar y cargar un objeto Producto completo con datos en una sola línea.
     public MProducto(int idProducto, String descProducto, String unidad, double precioVenta, int stock, int minStock, int idCategoria) {
         this.idProducto = idProducto;
         this.descProducto = descProducto;
@@ -30,7 +33,8 @@ public class MProducto {
         this.minStock = minStock;
         this.idCategoria = idCategoria;
     }
-    
+
+    // Metodos Getters y Setters
     public int getIdProducto() { return idProducto; }
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
 
@@ -51,5 +55,4 @@ public class MProducto {
 
     public int getIdCategoria() { return idCategoria; }
     public void setIdCategoria(int idCategoria) { this.idCategoria = idCategoria; }
-        
 }
