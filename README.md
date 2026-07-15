@@ -1,5 +1,5 @@
 # Sale Project CRUD
-Proyecto final para el curso de Programación orientada a Objetos en Java, este proyecto esta trabjando con Maven y el lock and Leaf de Flatlaf https://www.formdev.com/flatlaf/
+Proyecto final para el curso de Programación Orientada a Objetos en Java, este proyecto esta trabajado con Maven y el look and Feel de Flatlaf https://www.formdev.com/flatlaf/
 
 ## Versión de JDK y Software
 El Software usando fue 
