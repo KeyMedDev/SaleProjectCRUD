@@ -88,7 +88,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setPreferredSize(new java.awt.Dimension(270, 720));
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/SaleProject/resources/logo_menu-39x24.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_menu-39x24.png"))); // NOI18N
 
         text_logo.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         text_logo.setText("Sale Project CRUD");
